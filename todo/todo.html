@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基于Vue的todo列表</title>
+    <style>
+        .finished {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <input v-model='message' v-on:keyup.enter="addNew">
+        <ul>
+            <li v-for="item in items" v-bind:class="{finished:item.isFinished}" v-on:click="toggleFinished(item)">{{item.label}}</li>
+        </ul>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                title: '今天要做哪些事？',
+                message: '',
+                items: [{
+                    label: 'yi',
+                    isFinished: true
+                }]
+            },
+            methods: {
+                toggleFinished: function (item) {
+                    item.isFinished = !item.isFinished;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
