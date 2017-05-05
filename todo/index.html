@@ -46,7 +46,7 @@
             el: '#app',
             data: {
                 title: '今天要做哪些事？',
-                items: JSON.parse(localStorage.getItem('items') || []),
+                items: JSON.parse(localStorage.getItem('items')) || [],
                 message: ''
             },
             methods: {
