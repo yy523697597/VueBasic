@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <link rel="stylesheet" href="../wing.min.css">
+    <style>
+        .is-active {
+            color: white;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in lists">{{item}}</li>
+        </ul>
+        <input type="text" v-model="usrInput" @focus="focusOn">
+        <span>
+            <button @click="addItem" >添加</button>
+        </span>
+    </div>
+
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                lists: ['充足', 'good'],
+                usrInput: '请输入要添加的列表项'
+            },
+            methods: {
+                addItem: function () {
+                    this.lists.push(this.usrInput);
+                    this.usrInput = '';
+                },
+                focusOn: function () {
+
+                    this.usrInput = '';
+                },
+
+
+            }
+        })
+    </script>
+</body>
+
+</html>

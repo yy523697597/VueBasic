@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购买游戏</title>
+    <link rel="stylesheet" href="../wing.min.css">
+
+    <style>
+        body {
+            width: 850px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-item,
+        .my-game {
+            border: 1px solid #222;
+            width: 350px;
+            float: left;
+            height: 650px;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        figure {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            padding: 10px 0;
+            transition: all 1s;
+            border-radius: 5px;
+        }
+
+        figure:hover {
+            box-shadow: 0 0 8px #ccc;
+        }
+
+
+
+        .game-item {
+            margin-right: 20px;
+        }
+
+        .my-cash {
+            color: orange;
+            margin: 10px 0;
+        }
+
+        button {
+            transition: all 1s;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: maroon;
+        }
+    </style>
+</head>
+<script src="../vue.js"></script>
+
+<body>
+    <div id="game">
+        <h1>购买心仪的游戏</h1>
+        <div class="page-header">
+            <h2 class="my-cash">
+                我的余额：￥{{myBanlance.toFixed(2)}}
+            </h2>
+
+        </div>
+        <div class="game-item">
+            <h3>游戏列表</h3>
+            <figure v-for="item in wishList">
+                <img :src="item.imgSrc" alt="item.imgAlt">
+                <div class="gameInfo">
+                    <h3 class="game-name">{{item.name}}</h3>
+                    <p class="price">￥{{item.price.toFixed(2)}}</p>
+                    <button @click="buyGame(item.id)">购买游戏</button>
+                </div>
+            </figure>
+        </div>
+        <div class="my-game">
+            <h3>我的游戏</h3>
+            <figure v-for="item in myGames">
+                <img :src="item.imgSrc" alt="item.imgAlt">
+                <div class="gameInfo">
+                    <h3 class="game-name">{{item.name}}</h3>
+                </div>
+                <button @click="delGame(item.id)">删除游戏</button>
+            </figure>
+        </div>
+    </div>
+    <script>
+        var games = [{
+            id: 0,
+            name: '神秘海域',
+            imgSrc: 'img/1.jpg',
+            price: 150.52,
+            purchased: false
+        }, {
+            id: 1,
+            name: '刺客信条',
+            imgSrc: 'img/2.jpg',
+            price: 158,
+            purchased: false
+        }
+        ];
+        var myGame = new Vue({
+            el: '#game',
+            data: {
+                games: window.games,
+                myCash: 5600
+            },
+            methods: {
+                buyGame: function (id) {
+                    this.games[id].purchased = true;
+                },
+                delGame: function (id) {
+                    this.games[id].purchased = false;
+                }
+            },
+            computed: {
+                wishList: function () {
+                    return this.games.filter(
+                        function (game) {
+                            return !game.purchased;
+                        }
+                    );
+                },
+                myGames: function () {
+                    return this.games.filter(
+                        function (game) {
+                            return game.purchased;
+                        }
+                    );
+                },
+                myBanlance: function () {
+                    var sum = 0;
+                    this.myGames.forEach(function (item, index) {
+                        sum += item.price;
+                    });
+                    return this.myCash - sum;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
