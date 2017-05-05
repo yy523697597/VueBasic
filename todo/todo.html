@@ -9,6 +9,25 @@
     <style>
         .finished {
             text-decoration: line-through;
+            color: green;
+        }
+
+        body {
+            width: 500px;
+            margin: 0 auto;
+            font-family: '微软雅黑';
+        }
+
+        li {
+            font-size: 20px;
+            color: red;
+        }
+
+        input {
+            width: 200px;
+            height: 30px;
+            border-radius: 3px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -17,25 +36,35 @@
     <div id="app">
         <h1>{{title}}</h1>
         <input v-model='message' v-on:keyup.enter="addNew">
-        <ul>
+        <ol>
             <li v-for="item in items" v-bind:class="{finished:item.isFinished}" v-on:click="toggleFinished(item)">{{item.label}}</li>
-        </ul>
+        </ol>
     </div>
     <script src="../vue.js"></script>
     <script>
-        new Vue({
+        var app = new Vue({
             el: '#app',
             data: {
                 title: '今天要做哪些事？',
-                message: '',
-                items: [{
-                    label: 'yi',
-                    isFinished: true
-                }]
+                items: JSON.parse(localStorage.getItem('items') || []),
+                message: ''
             },
             methods: {
                 toggleFinished: function (item) {
                     item.isFinished = !item.isFinished;
+                },
+                addNew: function () {
+                    this.items.push({ label: this.message, isFinished: false });
+                    this.message = '';
+                }
+
+            },
+            watch: {
+                deep: true,
+                items: {
+                    handler: function (items) {
+                        window.localStorage.setItem('items', JSON.stringify(this.items));
+                    }
                 }
             }
         })
