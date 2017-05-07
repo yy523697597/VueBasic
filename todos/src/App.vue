@@ -1,3 +1,11 @@
+/*
+ * @Author: yuyi 
+ * @Date: 2017-05-05 21:14:23 
+ * @Last Modified by:   yuyi 
+ * @Last Modified time: 2017-05-05 21:14:23 
+ */
+
+
 <template>
   <div id="app">
     <h1 v-text="title"></h1>
@@ -72,5 +80,6 @@ li {
   width: 150px;
   margin: 0 auto;
   color: red;
+  cursor: pointer;
 }
 </style>

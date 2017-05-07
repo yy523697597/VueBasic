@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../wing.min.css">
+    <title>Vue组件通信</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="boxWrapper">
+            <div v-show="showBox">这是一个大的box</div>
+        </div>
+        <toggle-btn v-on:toggle-box="toggleBox"></toggle-btn>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        Vue.component('toggle-btn', {
+            template: '<button class="btn btn-info" @click="emmitToggle">Toggle Box</button>',
+            methods: {
+                emmitToggle: function () {
+                    this.$emit('toggle-box')
+                }
+            }
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                showBox: true
+            },
+            methods: {
+                toggleBox: function () {
+                    this.showBox = !this.showBox;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
