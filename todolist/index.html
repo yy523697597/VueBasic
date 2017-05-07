@@ -67,7 +67,7 @@
                         <button class="close" data-dismiss="modal">
 								<span>&times;</span>
 							</button>
-                        <h4>确认删除吗？</h4>
+                        <h4>{{warningText}}</h4>
                     </div>
                     <div class="modal-body text-right">
                         <button class="btn btn-primary" data-dismiss="modal">取消</button>
@@ -89,7 +89,8 @@
                 myData: [],
                 username: '',
                 userage: '',
-                delindex: 0
+                delindex: 0,
+                warningText: '确认删除这一项吗？'
             }, methods: {
                 add: function () {
                     this.myData.push({
@@ -100,6 +101,9 @@
                     this.userage = '';
                 },
                 addDelIndex: function (index) {
+                    if (this.warningText === '确认删除全部吗？') {
+                        this.warningText = '确认删除这一项吗？'
+                    }
                     this.delindex = index;
                 },
                 deleteMsg: function () {
@@ -110,6 +114,7 @@
                     }
                 },
                 delAll: function () {
+                    this.warningText = '确认删除全部吗？'
                     this.delindex = -1;
                 }
             }
