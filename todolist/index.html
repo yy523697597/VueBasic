@@ -53,7 +53,7 @@
 
             <tr v-show="myData.length !==0">
                 <td colspan="4">
-                    <button class="btn btn-danger">删除全部</button>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#layer" @click="delAll()">全部删除</button>
                 </td>
             </tr>
             <tr v-show="myData.length === 0">
@@ -103,7 +103,14 @@
                     this.delindex = index;
                 },
                 deleteMsg: function () {
-                    this.myData.splice(this.delindex, 1);
+                    if (this.delindex === -1) {
+                        this.myData = [];
+                    } else {
+                        this.myData.splice(this.delindex, 1);
+                    }
+                },
+                delAll: function () {
+                    this.delindex = -1;
                 }
             }
         })
